@@ -1,0 +1,8 @@
+#Requisitos para o Projeto
+
+fastapi
+uvicorn
+pandas
+numpy
+scikit-learn
+joblib
