@@ -10,7 +10,6 @@ app = FastAPI(
     version="1.0"
 )
 
-# 🔹 carregamento do modelo
 modelo = joblib.load("../models/modelo_preco_imoveis.joblib")
 
 
@@ -24,14 +23,13 @@ class Imovel(BaseModel):
 
 @app.post("/predict")
 def predict(imovel: Imovel):
-    # 1️⃣ dados crus
+
     df = pd.DataFrame([imovel.dict()])
 
-    # 2️⃣ feature engineering (ANTES do predict)
+   
     df["BATH_PER_BED"] = df["BATH"] / df["BEDS"]
     df["BEDS_PER_SQFT"] = df["BEDS"] / df["PROPERTYSQFT"]
 
-    # 3️⃣ previsão
     preco_pred = modelo.predict(df)[0]
 
     return {
